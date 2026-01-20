@@ -22,7 +22,10 @@ cd app_flask
 ```bash
 docker build -t app_flask .
 ```
-
+  2.1 Desde Docker Hub
+  ```bash
+  docker run -p 5000:5000 anadav09/app_flask:latest
+  ```
 3. Correr el contenedor
 ```bash
 docker run -p 5000:5000 app_flask
