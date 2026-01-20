@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card-body">
+    <h5 class="card-title">Items existentes</h5>
+    <ul class="list-group">
+        {% for item in items %}
+            <li class="list-group-item">
+                {{ loop.index0 }} - {{ item }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

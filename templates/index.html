@@ -1,15 +1,59 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App con Flask</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light text-center p-5">
-    <div class="container">
-        <h1 class="mb-4">{{ mensaje }}</h1>
-        <p class="lead">Ejemplo básico de Flask</p>
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- Crear item -->
+    <div class="col-md-6">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Agregar item</h5>
+
+                <form method="POST" action="/items">
+                    <input 
+                        name="name" 
+                        class="form-control mb-3" 
+                        placeholder="Nombre del item">
+
+                    <button class="btn btn-primary w-100">
+                        Agregar
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+
+    <!-- Subir archivo -->
+    <div class="col-md-6">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Subir archivo</h5>
+
+                <form 
+                    method="POST" 
+                    action="/upload" 
+                    enctype="multipart/form-data">
+
+                    <input 
+                        type="file" 
+                        name="file" 
+                        class="form-control mb-3">
+
+                    <button class="btn btn-secondary w-100">
+                        Subir
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="text-center">
+    <a href="/items" class="btn btn-outline-dark">
+        Ver items
+    </a>
+</div>
+
+{% endblock %}

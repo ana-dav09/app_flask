@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block title %}Archivo Subido{% endblock %}
+
+{% block content %}
+<h3>Archivo: {{ filename }}</h3>
+<pre>{{ contenido }}</pre>
+<a href="/" class="btn btn-primary mt-3">Volver</a>
+{% endblock %}

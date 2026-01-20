@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, redirect, render_template, request, jsonify, url_for
 import os
 
 # Inicializar web app
@@ -20,7 +20,7 @@ def home():
 
 @app.route("/items", methods=["GET"])
 def get_items():
-    return render_template("items.html", items=items)
+    return render_template("items.html", items=items, mensaje="Lista de items")
 
 # POST
 @app.route("/items", methods=["POST"])
@@ -30,19 +30,29 @@ def post_item():
         return "Coloca un nombre", 400
     
     items.append(name)
-    return jsonify({"message": "Item agregado", "items": items})
+    return redirect(url_for('get_items'))
 
-@app.route("/upload", method=["POST"])
+@app.route("/upload", methods=["POST"])
 def upload_file():
     file = request.files.get("file")
     if not file:
         return "Archivo no enviado", 404
-    
-    file.save(os.path.join(UPLOAD_DIRECT, file.filename))
-    return jsonify({"message": "Archivo guardado", "filename": file.filename})
+
+    filepath = os.path.join(UPLOAD_DIRECT, file.filename)
+    file.save(filepath)
+
+    # Leer contenido
+    file.seek(0)
+    contenido = file.read().decode("utf-8")
+
+    # Renderizar template
+    return render_template("upload_result.html",
+                           filename=file.filename,
+                           contenido=contenido)
+
 
 # PUT
-@app.route("items/<int:index>", methods=["PUT"])
+@app.route("/items/<int:index>", methods=["PUT"])
 def update_item(index:int):
     data = request.json
     try:
@@ -52,7 +62,7 @@ def update_item(index:int):
         return jsonify({"error": "Item no existe"}), 404
     
 # DELETE
-@app.route("items/<int:index>", methods="DELETE")
+@app.route("/items/<int:index>", methods=["DELETE"])
 def delete_item(index):
     try:
         items.pop(index)
