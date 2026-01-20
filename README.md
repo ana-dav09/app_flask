@@ -16,6 +16,7 @@ Esta aplicación web con Flask permite:
 ```bash
 git clone https://github.com/ana-dav09/app_flask
 cd app_flask
+```
 
 2. Construir la imagen del docker
 ```bash
